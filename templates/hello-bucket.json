@@ -1,0 +1,17 @@
+{
+  "Resources": {
+    "TpBucket": {
+      "Type": "AWS::S3::Bucket",
+      "Properties": {
+        "AccessControl": "Private",
+        "BucketName": "test.takkyuuplayer.com",
+        "WebsiteConfiguration": {
+          "RedirectAllRequestsTo": {
+            "HostName": "takkyuuplayer.com",
+            "Protocol": "https"
+          }
+        }
+      }
+    }
+  }
+}
