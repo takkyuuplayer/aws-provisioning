@@ -74,8 +74,8 @@ Resources:
     Properties:
       DistributionConfig:
         Comment: CDN for S3-backed website
-        #Aliases:
-        #  - !Ref RedirectFrom
+        Aliases:
+          - !Ref RedirectFrom
         Enabled: 'true'
         DefaultCacheBehavior:
           ForwardedValues:
