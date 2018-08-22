@@ -94,24 +94,23 @@ Resources:
                 - !Ref AWS::Region
                 - Suffix
           Id: only-origin
-  #WebsiteDNSName:
-  #  Type: AWS::Route53::RecordSet
-  #  Properties:
-  #    AliasTarget:
-  #      DNSName: !GetAtt
-  #        - WebsiteCDN
-  #        - DomainName
-  #      HostedZoneId: Z2FDTNDATAQYW2 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
-  #    HostedZoneName:
-  #      !Join
-  #      - ''
-  #      - - !Ref HostedZone
-  #        - "."
-  #    Comment: CNAME redirect custom name to CloudFront distribution
-  #    Name: !Ref RedirectFrom
-  #    Type: A
-  #    TTL: '900'
-  
+  WebsiteDNSName:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !GetAtt
+          - WebsiteCDN
+          - DomainName
+        HostedZoneId: Z2FDTNDATAQYW2 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
+      HostedZoneName:
+        !Join
+        - ''
+        - - !Ref HostedZone
+          - "."
+      Comment: CNAME redirect custom name to CloudFront distribution
+      Name: !Ref RedirectFrom
+      Type: A
+
 Outputs:
   BucketName:
     Value: !Ref S3BucketForWebsiteContent
