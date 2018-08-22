@@ -1,7 +1,7 @@
 DIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 STACKNAME=redirection
 RedirectFrom=r.takkyuuplayer.com
-RedirectTo=takkyuuplayer.com
+RedirectTo=www.takkyuuplayer.com
 HostedZone=takkyuuplayer.com
 
 test:
