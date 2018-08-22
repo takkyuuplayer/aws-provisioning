@@ -74,8 +74,8 @@ Resources:
     Properties:
       DistributionConfig:
         Comment: CDN for S3-backed website
-        Aliases:
-          - !Ref RedirectFrom
+        #Aliases:
+        #  - !Ref RedirectFrom
         Enabled: 'true'
         DefaultCacheBehavior:
           ForwardedValues:
@@ -94,23 +94,23 @@ Resources:
                 - !Ref AWS::Region
                 - Suffix
           Id: only-origin
-  WebsiteDNSName:
-    Type: AWS::Route53::RecordSet
-    Properties:
-      AliasTarget:
-        DNSName: !GetAtt
-          - WebsiteCDN
-          - DomainName
-        HostedZoneId: Z2FDTNDATAQYW2 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
-      HostedZoneName:
-        !Join
-        - ''
-        - - !Ref HostedZone
-          - "."
-      Comment: CNAME redirect custom name to CloudFront distribution
-      Name: !Ref RedirectFrom
-      Type: A
-      TTL: '900'
+  #WebsiteDNSName:
+  #  Type: AWS::Route53::RecordSet
+  #  Properties:
+  #    AliasTarget:
+  #      DNSName: !GetAtt
+  #        - WebsiteCDN
+  #        - DomainName
+  #      HostedZoneId: Z2FDTNDATAQYW2 # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-route53-aliastarget.html
+  #    HostedZoneName:
+  #      !Join
+  #      - ''
+  #      - - !Ref HostedZone
+  #        - "."
+  #    Comment: CNAME redirect custom name to CloudFront distribution
+  #    Name: !Ref RedirectFrom
+  #    Type: A
+  #    TTL: '900'
   
 Outputs:
   BucketName:
@@ -124,8 +124,8 @@ Outputs:
         - !FindInMap [ Region2S3WebsiteSuffix, !Ref 'AWS::Region', Suffix]
 
     Description: Name of S3 bucket to hold website content
-  WebsiteURL:
-    Value: !Join
-    - ''
-    - - http://
-      - !Ref WebsiteDNSName
+  #WebsiteURL:
+  #  Value: !Join
+  #  - ''
+  #  - - http://
+  #    - !Ref WebsiteDNSName
