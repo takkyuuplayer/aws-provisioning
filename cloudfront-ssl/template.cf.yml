@@ -1,0 +1,19 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Issue certificate for cloudfront for custom domain
+Parameters:
+  DomainName:
+    Type: String
+    Description: FQDN
+  ValidationDomain:
+    Type: String
+    Description: FQDN
+Resources:
+  SSLCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref DomainName
+      DomainValidationOptions:
+        - DomainName: !Ref DomainName
+          ValidationDomain: !Ref ValidationDomain
