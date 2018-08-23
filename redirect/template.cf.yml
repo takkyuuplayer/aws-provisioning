@@ -111,6 +111,14 @@ Resources:
       Name: !Ref RedirectFrom
       Type: A
 
+  SSLCertificate:
+    Type: AWS::CertificateManager::Certificate
+    Properties:
+      DomainName: !Ref RedirectFrom
+      DomainValidationOptions:
+        - DomainName: !Ref RedirectFrom
+          ValidationDomain: !Ref HostedZone
+      
 Outputs:
   BucketName:
     Value: !Ref S3BucketForWebsiteContent
