@@ -94,6 +94,9 @@ Resources:
                 - !Ref AWS::Region
                 - Suffix
           Id: only-origin
+        ViewerCertificate:
+          SslSupportMethod: sni-only
+          AcmCertificateArn: !Ref SSLCertificate
   WebsiteDNSName:
     Type: AWS::Route53::RecordSet
     Properties:
