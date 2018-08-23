@@ -1,7 +1,7 @@
 DIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
 DomainName=r.takkyuuplayer.com
 ValidationDomain=takkyuuplayer.com
-StackName=ssl-$(shell echo takkyuuplayer.com | sed -e 's/\./-/g')
+StackName=ssl-$(shell echo ${DomainName} | sed -e 's/\./-/g')
 
 production:
 	aws cloudformation deploy \
