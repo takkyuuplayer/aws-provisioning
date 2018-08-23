@@ -3,7 +3,7 @@ STACKNAME=redirection
 RedirectFrom=r.takkyuuplayer.com
 RedirectTo=www.takkyuuplayer.com
 HostedZone=takkyuuplayer.com
-AcmCertificateArn=$(shell aws --region us-east-1 acm list-certificates | jq '.CertificateSummaryList| .[] | select(.DomainName == "r.takkyuuplayer.com") | .CertificateArn' | sed -e 's/"//g')
+AcmCertificateArn=$(shell aws --region us-east-1 acm list-certificates | jq '.CertificateSummaryList| .[] | select(.DomainName == "${RedirectFrom}") | .CertificateArn' | sed -e 's/"//g')
 
 production:
 	aws cloudformation deploy \
