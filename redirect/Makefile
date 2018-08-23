@@ -3,22 +3,20 @@ STACKNAME=redirection
 RedirectFrom=r.takkyuuplayer.com
 RedirectTo=www.takkyuuplayer.com
 HostedZone=takkyuuplayer.com
-
-test:
-	aws cloudformation validate-template --template-url file:/${DIR}/template.cf.yml
+AcmCertificateArn=$(shell aws --region us-east-1 acm list-certificates | jq '.CertificateSummaryList| .[] | select(.DomainName == "r.takkyuuplayer.com") | .CertificateArn' | sed -e 's/"//g')
 
 production:
 	aws cloudformation deploy \
 		--no-execute-changeset \
 		--stack-name ${STACKNAME} \
 		--template-file template.cf.yml \
-		--parameter-overrides RedirectTo=${RedirectTo} RedirectFrom=${RedirectFrom} HostedZone=${HostedZone}
+		--parameter-overrides RedirectTo=${RedirectTo} RedirectFrom=${RedirectFrom} HostedZone=${HostedZone} AcmCertificateArn=${AcmCertificateArn}
 
 production/deploy:
 	aws cloudformation deploy \
 		--stack-name ${STACKNAME} \
 		--template-file template.cf.yml \
-		--parameter-overrides RedirectTo=${RedirectTo} RedirectFrom=${RedirectFrom} HostedZone=${HostedZone}
+		--parameter-overrides RedirectTo=${RedirectTo} RedirectFrom=${RedirectFrom} HostedZone=${HostedZone} AcmCertificateArn=${AcmCertificateArn}
 	make production/output
 
 production/output:

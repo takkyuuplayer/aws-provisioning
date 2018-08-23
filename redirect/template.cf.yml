@@ -4,6 +4,8 @@ AWSTemplateFormatVersion: 2010-09-09
 Description: >-
   Static website only for redirection
 Parameters:
+  AcmCertificateArn:
+    Type: String
   HostedZone:
     Type: String
     Description: The DNS name of an existing Amazon Route 53 hosted zone
@@ -96,7 +98,7 @@ Resources:
           Id: only-origin
         ViewerCertificate:
           SslSupportMethod: sni-only
-          AcmCertificateArn: !Ref SSLCertificate
+          AcmCertificateArn: !Ref AcmCertificateArn
   WebsiteDNSName:
     Type: AWS::Route53::RecordSet
     Properties:
@@ -113,14 +115,6 @@ Resources:
       Comment: CNAME redirect custom name to CloudFront distribution
       Name: !Ref RedirectFrom
       Type: A
-
-  SSLCertificate:
-    Type: AWS::CertificateManager::Certificate
-    Properties:
-      DomainName: !Ref RedirectFrom
-      DomainValidationOptions:
-        - DomainName: !Ref RedirectFrom
-          ValidationDomain: !Ref HostedZone
       
 Outputs:
   BucketName:
@@ -134,8 +128,3 @@ Outputs:
         - !FindInMap [ Region2S3WebsiteSuffix, !Ref 'AWS::Region', Suffix]
 
     Description: Name of S3 bucket to hold website content
-  #WebsiteURL:
-  #  Value: !Join
-  #  - ''
-  #  - - http://
-  #    - !Ref WebsiteDNSName
