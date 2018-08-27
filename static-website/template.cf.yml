@@ -1,8 +1,7 @@
 
 ---
 AWSTemplateFormatVersion: 2010-09-09
-Description: >-
-  Static website
+Description: Static website
 Parameters:
   AcmCertificateArn:
     Type: String

@@ -3,6 +3,7 @@ DomainName=v4.takkyuuplayer.com
 HostedZone=takkyuuplayer.com
 StackName=website-$(shell echo "${DomainName}" | sed -e 's/\./-/g')
 AcmCertificateArn=$(shell aws --region us-east-1 acm list-certificates | jq '.CertificateSummaryList| .[] | select(.DomainName == "${DomainName}") | .CertificateArn' | sed -e 's/"//g')
+Distribution=$(shell aws cloudfront list-distributions | jq '.DistributionList.Items[] | select(.Aliases.Items[] == "${DomainName}")')
 
 confirm:
 	aws cloudformation deploy \
@@ -17,6 +18,9 @@ deploy:
 		--template-file template.cf.yml \
 		--parameter-overrides DomainName=${DomainName} HostedZone=${HostedZone} AcmCertificateArn=${AcmCertificateArn}
 	make output
+
+clear_cache:
+	aws cloudfront create-invalidation --distribution-id $(shell echo '${Distribution}' | jq .Id) --paths '/*'
 
 output:
 	aws cloudformation describe-stacks --stack-name ${StackName} \
