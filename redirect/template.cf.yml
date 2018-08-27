@@ -81,11 +81,10 @@ Resources:
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: 'true'
-          TargetOriginId: only-origin
-          ViewerProtocolPolicy: allow-all
+          TargetOriginId: !Ref RedirectFrom
+          ViewerProtocolPolicy: redirect-to-https
         Origins:
         - CustomOriginConfig:
-            OriginProtocolPolicy: match-viewer
             OriginProtocolPolicy: http-only
           DomainName:
             !Join
@@ -95,7 +94,7 @@ Resources:
                 - Region2S3WebsiteSuffix
                 - !Ref AWS::Region
                 - Suffix
-          Id: only-origin
+          Id: !Ref RedirectFrom
         ViewerCertificate:
           SslSupportMethod: sni-only
           AcmCertificateArn: !Ref AcmCertificateArn
