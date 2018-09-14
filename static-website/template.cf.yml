@@ -103,10 +103,12 @@ Resources:
           - !Ref DomainName
         Enabled: 'true'
         DefaultCacheBehavior:
+          Compress: true
           ForwardedValues:
             QueryString: 'true'
           TargetOriginId: !Ref DomainName
           ViewerProtocolPolicy: redirect-to-https
+        HttpVersion: http2
         Origins:
         - CustomOriginConfig:
             OriginProtocolPolicy: http-only
