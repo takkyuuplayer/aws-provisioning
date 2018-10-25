@@ -1,8 +1,7 @@
 
 ---
 AWSTemplateFormatVersion: 2010-09-09
-Description: >-
-  Static website only for redirection
+Description: Static website.
 Parameters:
   AcmCertificateArn:
     Type: String
@@ -63,7 +62,7 @@ Mappings:
     eu-central-1:
       Suffix: .s3-website-eu-central-1.amazonaws.com
 Resources:
-  S3BucketForWebsiteContent:
+  S3Bucket:
     Type: 'AWS::S3::Bucket'
     Properties:
       AccessControl: Private
@@ -82,20 +81,20 @@ Resources:
         DefaultCacheBehavior:
           ForwardedValues:
             QueryString: 'true'
-          TargetOriginId: only-origin
-          ViewerProtocolPolicy: allow-all
+          TargetOriginId: !Ref RedirectFrom
+          ViewerProtocolPolicy: redirect-to-https
         Origins:
         - CustomOriginConfig:
-            OriginProtocolPolicy: match-viewer
+            OriginProtocolPolicy: http-only
           DomainName:
             !Join
             - ''
-            - - !Ref S3BucketForWebsiteContent
+            - - !Ref S3Bucket
               - !FindInMap
                 - Region2S3WebsiteSuffix
                 - !Ref AWS::Region
                 - Suffix
-          Id: only-origin
+          Id: !Ref RedirectFrom
         ViewerCertificate:
           SslSupportMethod: sni-only
           AcmCertificateArn: !Ref AcmCertificateArn
@@ -118,13 +117,12 @@ Resources:
       
 Outputs:
   BucketName:
-    Value: !Ref S3BucketForWebsiteContent
+    Value: !Ref S3Bucket
     Description: Name of S3 bucket to hold website content
   BucketURL:
     Value: !Join
       - ""
       - - "http://"
-        - !Ref S3BucketForWebsiteContent
+        - !Ref S3Bucket
         - !FindInMap [ Region2S3WebsiteSuffix, !Ref 'AWS::Region', Suffix]
-
     Description: Name of S3 bucket to hold website content

@@ -1,5 +1,12 @@
 ## Custom domain static website just for redirection.
 
+To host
+
+```
+http://takkyuuplayer.com
+https://takkyuuplayer.com
+```
+
 ### How To
 
 ```

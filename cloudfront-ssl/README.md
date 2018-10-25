@@ -1,5 +1,11 @@
 ## Generate SSL cerificate for a custom domain for cloudfront 
 
+Issue ACM for
+
+```
+takkyuuplayer.com
+```
+
 ### How To
 
 ```

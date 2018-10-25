@@ -1,5 +1,5 @@
 DIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
-DomainName=r.takkyuuplayer.com
+DomainName=takkyuuplayer.com
 ValidationDomain=takkyuuplayer.com
 StackName=ssl-$(shell echo ${DomainName} | sed -e 's/\./-/g')
 

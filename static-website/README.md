@@ -1,5 +1,12 @@
 ## Custom domain static website.
 
+To host
+
+```
+http://v4.takkyuuplayer.com
+https://v4.takkyuuplayer.com
+```
+
 ### How To
 
 ```

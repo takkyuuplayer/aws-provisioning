@@ -1,8 +1,7 @@
 
 ---
 AWSTemplateFormatVersion: 2010-09-09
-Description: >-
-  Static website
+Description: Static website
 Parameters:
   AcmCertificateArn:
     Type: String
@@ -53,7 +52,7 @@ Mappings:
     eu-central-1:
       Suffix: .s3-website-eu-central-1.amazonaws.com
 Resources:
-  S3BucketForWebsiteContent:
+  S3Bucket:
     Type: 'AWS::S3::Bucket'
     Properties:
       AccessControl: PublicRead
@@ -63,7 +62,7 @@ Resources:
   S3BucketPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
-      Bucket: !Ref S3BucketForWebsiteContent
+      Bucket: !Ref S3Bucket
       PolicyDocument:
         Statement:
         - Action:
@@ -72,7 +71,7 @@ Resources:
           Resource: !Join
             - ''
             - - 'arn:aws:s3:::'
-              - !Ref S3BucketForWebsiteContent
+              - !Ref S3Bucket
               - "/*"
           Principal: "*"
         - Sid: AddCannedAcl
@@ -89,7 +88,7 @@ Resources:
           Resource: !Join
             - ''
             - - 'arn:aws:s3:::'
-              - !Ref S3BucketForWebsiteContent
+              - !Ref S3Bucket
               - "/*"
           Condition:
             StringEquals:
@@ -104,25 +103,28 @@ Resources:
           - !Ref DomainName
         Enabled: 'true'
         DefaultCacheBehavior:
+          Compress: true
           ForwardedValues:
             QueryString: 'true'
-          TargetOriginId: only-origin
-          ViewerProtocolPolicy: allow-all
+          TargetOriginId: !Ref DomainName
+          ViewerProtocolPolicy: redirect-to-https
+        HttpVersion: http2
         Origins:
         - CustomOriginConfig:
-            OriginProtocolPolicy: match-viewer
+            OriginProtocolPolicy: http-only
           DomainName:
             !Join
             - ''
-            - - !Ref S3BucketForWebsiteContent
+            - - !Ref S3Bucket
               - !FindInMap
                 - Region2S3WebsiteSuffix
                 - !Ref AWS::Region
                 - Suffix
-          Id: only-origin
+          Id: !Ref DomainName
         ViewerCertificate:
           SslSupportMethod: sni-only
           AcmCertificateArn: !Ref AcmCertificateArn
+           
   WebsiteDNSName:
     Type: AWS::Route53::RecordSet
     Properties:
@@ -142,12 +144,12 @@ Resources:
       
 Outputs:
   BucketName:
-    Value: !Ref S3BucketForWebsiteContent
+    Value: !Ref S3Bucket
     Description: Name of S3 bucket to hold website content
   BucketURL:
     Value: !Join
       - ""
       - - "http://"
-        - !Ref S3BucketForWebsiteContent
+        - !Ref S3Bucket
         - !FindInMap [ Region2S3WebsiteSuffix, !Ref 'AWS::Region', Suffix]
     Description: Name of S3 bucket to hold website content
