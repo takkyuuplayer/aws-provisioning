@@ -1,5 +1,5 @@
 DIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
-DomainName=v4.takkyuuplayer.com
+DomainName=takkyuuplayer.com
 HostedZone=takkyuuplayer.com
 StackName=website-$(shell echo "${DomainName}" | sed -e 's/\./-/g')
 AcmCertificateArn=$(shell aws --region us-east-1 acm list-certificates | jq '.CertificateSummaryList| .[] | select(.DomainName == "${DomainName}") | .CertificateArn' | sed -e 's/"//g')

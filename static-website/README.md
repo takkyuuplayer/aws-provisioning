@@ -3,8 +3,8 @@
 To host
 
 ```
-http://v4.takkyuuplayer.com
-https://v4.takkyuuplayer.com
+http://takkyuuplayer.com
+https://takkyuuplayer.com
 ```
 
 ### How To
