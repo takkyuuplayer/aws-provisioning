@@ -1,6 +1,6 @@
 DIR=$(dir $(realpath $(firstword $(MAKEFILE_LIST))))
-RedirectFrom=takkyuuplayer.com
-RedirectTo=www.takkyuuplayer.com
+RedirectFrom=www.takkyuuplayer.com
+RedirectTo=takkyuuplayer.com
 HostedZone=takkyuuplayer.com
 StackName=website-$(shell echo "${RedirectFrom}" | sed -e 's/\./-/g')
 AcmCertificateArn=$(shell aws --region us-east-1 acm list-certificates | jq '.CertificateSummaryList| .[] | select(.DomainName == "${RedirectFrom}") | .CertificateArn' | sed -e 's/"//g')
