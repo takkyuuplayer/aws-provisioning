@@ -3,6 +3,8 @@ jobs:
   build:
     docker:
       - image: circleci/python:2.7-jessie
+    environment:
+      AWS_DEFAULT_REGION: ap-northeast-1
     steps:
       - checkout
       - run: sudo pip install awscli
