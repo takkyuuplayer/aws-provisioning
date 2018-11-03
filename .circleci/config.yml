@@ -5,6 +5,8 @@ jobs:
       - image: circleci/python:2.7-jessie
     environment:
       AWS_DEFAULT_REGION: ap-northeast-1
+      AWS_ACCESS_KEY_ID: dummy
+      AWS_SECRET_ACCESS_KEY: dummy
     steps:
       - checkout
       - run: sudo pip install awscli
