@@ -1,5 +1,5 @@
 BucketName=tp-tmp
-StackName=s3-${BucketName}
+StackName=s3-$(shell echo "${BucketName}" | sed -e 's/\./-/g')
 
 confirm:
 	aws cloudformation deploy \
