@@ -17,10 +17,7 @@ Resources:
   S3Bucket:
     Type: 'AWS::S3::Bucket'
     Properties:
-      AccessControl: PublicRead
-      WebsiteConfiguration:
-        IndexDocument: "index.html"
-        ErrorDocument: "404.html"
+      AccessControl: Private
   S3BucketPolicy:
     Type: AWS::S3::BucketPolicy
     DeletionPolicy: Retain
