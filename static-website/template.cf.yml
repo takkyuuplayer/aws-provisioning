@@ -29,16 +29,11 @@ Resources:
       Bucket: !Ref S3Bucket
       PolicyDocument:
         Statement:
-        - Action:
-          - "s3:GetObject"
-          Effect: Allow
-          Resource: !Join
-            - ''
-            - - 'arn:aws:s3:::'
-              - !Ref S3Bucket
-              - "/*"
-          Principal: 
-            CanonicalUser: !GetAtt WebCDNOriginAccessIdentity.S3CanonicalUserId
+          - Action: s3:GetObject
+            Effect: Allow
+            Resource: !Sub arn:aws:s3:::${S3Bucket}/*
+            Principal: 
+              CanonicalUser: !GetAtt WebCDNOriginAccessIdentity.S3CanonicalUserId
 
   WebsiteCDN:
     Type: AWS::CloudFront::Distribution
@@ -56,16 +51,11 @@ Resources:
           ViewerProtocolPolicy: redirect-to-https
         HttpVersion: http2
         Origins:
-          - DomainName: !Join
-              - ''
-              - - !Ref S3Bucket
-                - ".s3.amazonaws.com"
+          - DomainName: !GetAtt S3Bucket.DomainName
             Id: !Ref DomainName
             S3OriginConfig:
-              OriginAccessIdentity: !Join
-                - ''
-                - - "origin-access-identity/cloudfront/"
-                  - !Ref WebCDNOriginAccessIdentity
+              OriginAccessIdentity: !Sub origin-access-identity/cloudfront/${WebCDNOriginAccessIdentity}
+        DefaultRootObject: index.html
         ViewerCertificate:
           SslSupportMethod: sni-only
           AcmCertificateArn: !Ref AcmCertificateArn
