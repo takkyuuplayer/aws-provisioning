@@ -2,8 +2,8 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:2.7-jessie
+      - image: circleci/python:latest
     steps:
       - checkout
-      - run: sudo pip install awscli
+      - run: sudo pip3 install awscli
       - run: make test
