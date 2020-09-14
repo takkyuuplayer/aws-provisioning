@@ -9,11 +9,25 @@ Parameters:
   ValidationDomain:
     Type: String
     Description: FQDN
+  HostedZoneId:
+    Type: String
+    Description: HostedZoneId for the ValidationDomain
+Conditions:
+  HasHostedZoneId: !Not [!Equals [!Ref HostedZoneId, "null"]]
 Resources:
   SSLCertificate:
     Type: AWS::CertificateManager::Certificate
     Properties:
       DomainName: !Ref DomainName
       DomainValidationOptions:
-        - DomainName: !Ref DomainName
-          ValidationDomain: !Ref ValidationDomain
+        - Fn::If:
+            - HasHostedZoneId
+            - DomainName: !Ref DomainName
+              HostedZoneId: !Ref HostedZoneId
+            - DomainName: !Ref DomainName
+              ValidationDomain: !Ref ValidationDomain
+      ValidationMethod:
+        Fn::If:
+          - HasHostedZoneId
+          - "DNS"
+          - "Email"
