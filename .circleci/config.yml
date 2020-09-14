@@ -5,5 +5,8 @@ jobs:
       - image: circleci/python:latest
     steps:
       - checkout
-      - run: sudo pip3 install awscli
+      - run: |
+          sudo pip3 install awscli
+          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+          sudo apt-get update && sudo apt-get install terraform
       - run: make test
