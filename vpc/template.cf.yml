@@ -14,7 +14,7 @@ Resources:
     Properties:
       CidrBlock: "10.0.0.0/24"
       MapPublicIpOnLaunch: true
-      AvailabilityZone: !Sub "${AWS::Region}a"
+      AvailabilityZone: !Select [0, !GetAZs ""]
       VpcId: !Ref VPC
       Tags:
         - Key: Name
@@ -52,7 +52,7 @@ Resources:
   PrivateSubnet:
     Type: AWS::EC2::Subnet
     Properties:
-      AvailabilityZone: !Sub "${AWS::Region}a"
+      AvailabilityZone: !Select [0, !GetAZs ""]
       CidrBlock: "10.0.1.0/24"
       MapPublicIpOnLaunch: false
       VpcId: !Ref VPC
