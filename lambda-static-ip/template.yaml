@@ -23,7 +23,11 @@ Resources:
           Properties:
             Path: /
             Method: get
-      #VpcConfig:
+      VpcConfig:
+        SecurityGroupIds:
+          - !Ref SecurityGroup
+        SubnetIds:
+          - !Ref PrivateSubnet
   VPC:
     Type: AWS::EC2::VPC
     Properties:
