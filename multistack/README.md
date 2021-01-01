@@ -1,14 +1,4 @@
-# Welcome to your CDK TypeScript project!
+# Create an app with multiple stacks - AWS Cloud Development Kit (AWS CDK)
 
-This is a blank project for TypeScript development with CDK.
+https://docs.aws.amazon.com/cdk/latest/guide/stack_how_to_create_multiple_stacks.html
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
-
-## Useful commands
-
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
