@@ -1,4 +1,10 @@
-import { aws_guardduty, Stack, StackProps } from "aws-cdk-lib";
+import {
+  aws_guardduty,
+  aws_s3,
+  Duration,
+  Stack,
+  StackProps,
+} from "aws-cdk-lib";
 import { CfnBudget } from "aws-cdk-lib/aws-budgets";
 import { Trail } from "aws-cdk-lib/aws-cloudtrail";
 import { CfnHub } from "aws-cdk-lib/aws-securityhub";
@@ -15,7 +21,17 @@ export class InitPracticeStack extends Stack {
 }
 
 function SecurityPractice(scope: Construct) {
-  new Trail(scope, "CloudTrail");
+  const trailBucket = new aws_s3.Bucket(scope, "TrailBucket", {
+    bucketName: "takkyuuplayer-cloudtrail",
+    lifecycleRules: [
+      {
+        expiration: Duration.days(365),
+      },
+    ],
+  });
+  new Trail(scope, "CloudTrail", {
+    bucket: trailBucket,
+  });
   new aws_guardduty.CfnDetector(scope, "GuardDuty", { enable: true });
   new CfnHub(scope, "SecurityHub");
 }
