@@ -8,8 +8,7 @@ export class HomepageStack extends Stack {
 
     const homepage = new aws_s3.Bucket(this, "Bucket", {
       bucketName: "takkyuuplayer.com",
-      blockPublicAccess: aws_s3.BlockPublicAccess.BLOCK_ALL,
-      encryption: aws_s3.BucketEncryption.S3_MANAGED,
+      accessControl: aws_s3.BucketAccessControl.BUCKET_OWNER_FULL_CONTROL,
       versioned: true,
       websiteErrorDocument: "error.html",
       websiteIndexDocument: "index.html",
@@ -29,7 +28,6 @@ export class HomepageStack extends Stack {
 
     const redirect = new aws_s3.Bucket(this, "WwwBucket", {
       bucketName: "www.takkyuuplayer.com",
-      encryption: aws_s3.BucketEncryption.S3_MANAGED,
       versioned: true,
       websiteRedirect: {
         hostName: "takkyuuplayer.com",
