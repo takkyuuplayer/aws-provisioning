@@ -1,9 +1,0 @@
-version = 0.1
-[default]
-[default.deploy]
-[default.deploy.parameters]
-stack_name = "lambda-static-ip"
-s3_bucket = "tp-tmp"
-s3_prefix = "lambda-static-ip"
-region = "ap-northeast-1"
-capabilities = "CAPABILITY_IAM"
