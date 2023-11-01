@@ -36,7 +36,7 @@ export class GithubActionsOidcStack extends Stack {
         new iam.PolicyStatement({
           actions: ["lambda:*"],
           resources: [
-            "arn:aws:lambda:ap-northeast-1:694050191556:function:feed",
+            "arn:aws:lambda:ap-northeast-1:694050191556:function:feed-Feed-1O9CX1R4AVR2T",
           ],
         }),
       ],
