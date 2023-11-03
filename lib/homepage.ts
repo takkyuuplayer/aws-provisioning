@@ -27,7 +27,12 @@ export class HomepageStack extends Stack {
       new Policy(this, "S3DeployPolicy", {
         statements: [
           new PolicyStatement({
-            actions: ["s3:ListBucket", "s3:PutObject"],
+            actions: [
+              "s3:ListBucket",
+              "s3:PutObject",
+              "s3:PutObjectAcl",
+              "s3:DeleteObject",
+            ],
             resources: [homepage.bucketArn, `${homepage.bucketArn}/*`],
           }),
         ],
