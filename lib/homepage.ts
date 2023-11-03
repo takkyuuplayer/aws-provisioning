@@ -1,4 +1,5 @@
 import { Stack, StackProps, aws_s3 } from "aws-cdk-lib";
+import { Policy, PolicyStatement, Role } from "aws-cdk-lib/aws-iam";
 import { Construct } from "constructs";
 
 export class HomepageStack extends Stack {
@@ -12,7 +13,7 @@ export class HomepageStack extends Stack {
       websiteErrorDocument: "error.html",
       websiteIndexDocument: "index.html",
     });
-    const redirect = new aws_s3.Bucket(this, "WwwBucket", {
+    new aws_s3.Bucket(this, "WwwBucket", {
       bucketName: "www.takkyuuplayer.com",
       versioned: true,
       websiteRedirect: {
@@ -20,5 +21,22 @@ export class HomepageStack extends Stack {
         protocol: aws_s3.RedirectProtocol.HTTPS,
       },
     });
+
+    const role = Role.fromRoleName(this, "DeployRole", "DeployRole");
+    role.attachInlinePolicy(
+      new Policy(this, "S3DeployPolicy", {
+        statements: [
+          new PolicyStatement({
+            actions: [
+              "s3:ListBucket",
+              "s3:PutObject",
+              "s3:PutObjectAcl",
+              "s3:DeleteObject",
+            ],
+            resources: [homepage.bucketArn, `${homepage.bucketArn}/*`],
+          }),
+        ],
+      })
+    );
   }
 }
