@@ -24,7 +24,7 @@ export class HomepageStack extends Stack {
 
     const role = Role.fromRoleName(this, "DeployRole", "DeployRole");
     role.attachInlinePolicy(
-      new Policy(this, "DeployPolicy", {
+      new Policy(this, "S3DeployPolicy", {
         statements: [
           new PolicyStatement({
             actions: ["s3:ListBucket", "s3:PutObject"],
