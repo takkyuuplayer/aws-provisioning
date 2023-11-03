@@ -10,7 +10,7 @@ export class GithubActionsOidcStack extends Stack {
       url: "https://token.actions.githubusercontent.com",
       clientIds: ["sts.amazonaws.com"],
     });
-    const role = new iam.Role(this, "Role", {
+    new iam.Role(this, "Role", {
       roleName: "DeployRole",
       maxSessionDuration: Duration.hours(1),
       assumedBy: new iam.WebIdentityPrincipal(
@@ -25,22 +25,5 @@ export class GithubActionsOidcStack extends Stack {
         }
       ),
     });
-
-    const policy = new iam.Policy(this, "DeployHomepage", {
-      policyName: "DeployHomepage",
-      statements: [
-        new iam.PolicyStatement({
-          actions: ["s3:*"],
-          resources: ["arn:aws:s3:::takkyuuplayer.com/*"],
-        }),
-        new iam.PolicyStatement({
-          actions: ["lambda:*"],
-          resources: [
-            "arn:aws:lambda:ap-northeast-1:694050191556:function:feed-Feed-1O9CX1R4AVR2T",
-          ],
-        }),
-      ],
-    });
-    role.attachInlinePolicy(policy);
   }
 }
