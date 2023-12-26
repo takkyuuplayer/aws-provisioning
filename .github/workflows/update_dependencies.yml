@@ -33,5 +33,6 @@ jobs:
             $ git fetch --all
             $ git checkout update-dependencies
             $ git reset --hard origin/update-dependencies
+            $ npm ci
             $ npx cdk diff
             ```
