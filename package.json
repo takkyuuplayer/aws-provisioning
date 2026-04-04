@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "cdk": "cdk"
+    "cdk": "aws-cdk"
   },
   "devDependencies": {
     "@types/node": "25.5.0",
