@@ -2,7 +2,7 @@
   "name": "cdk",
   "version": "0.1.0",
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "bin": {
     "cdk": "bin/cdk.js"
@@ -13,13 +13,13 @@
     "cdk": "aws-cdk"
   },
   "devDependencies": {
-    "@types/node": "25.9.1",
-    "aws-cdk": "^2.1125.0",
+    "@types/node": "26.0.1",
+    "aws-cdk": "^2.1128.1",
     "ts-node": "^10.9.2",
     "typescript": "~6.0.3"
   },
   "dependencies": {
-    "aws-cdk-lib": "^2.257.0",
+    "aws-cdk-lib": "^2.260.0",
     "constructs": "^10.6.0",
     "source-map-support": "^0.5.21"
   }
